@@ -5,6 +5,7 @@
 - 在`longhorn.yaml` 中`numberOfReplicas`需要小于节点数量
 - 当备份的时候是需要一个备份地址的，在这里使用了官方的说的新建nfs卷来做备份的
  - backup的`target`设置为`nfs://longhorn-test-nfs-svc.default:/opt/backupstore`
+- 当备份为minIO的服务时，需要配置`longhorn-system`中`minio-secret`
 
 ## 部署
 ### 执行命令

@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-setup
+  namespace: default
+  labels:
+    component: minio
+spec:
+  template:
+    metadata:
+      name: minio-setup
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+      - name: config
+        emptyDir: {}
+      containers:
+      - name: mc
+        image: minio/mc:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MINIO_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_ACCESS_KEY_ID
+        - name: MINIO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_SECRET_ACCESS_KEY
+        - name: MINIO_CERT
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_CERT
+        - name: MINIO_CERT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_CERT_KEY
+        command:
+        - /bin/sh
+        - -c
+        - "mc --config-dir=/config config host add velero https://minio-service.default:9000 longhorn-test-access-key longhorn-test-secret-key && mc --config-dir=/config mb -p velero/velero --"
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
