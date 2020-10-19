@@ -1,0 +1,25 @@
+apiVersion: pingcap.com/v1alpha1
+kind: TidbMonitor
+metadata:
+  name: basic
+  namespace: tidb-cluster
+spec:
+  clusters:
+  - name: basic
+  prometheus:
+    baseImage: prom/prometheus
+    version: v2.18.1
+    service:
+      type: NodePort
+  grafana:
+    baseImage: grafana/grafana
+    version: 6.1.6
+    service:
+      type: NodePort
+  initializer:
+    baseImage: pingcap/tidb-monitor-initializer
+    version: v4.0.7
+  reloader:
+    baseImage: pingcap/tidb-monitor-reloader
+    version: v1.0.1
+  imagePullPolicy: IfNotPresent
