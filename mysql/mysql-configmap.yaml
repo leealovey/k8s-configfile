@@ -8,11 +8,10 @@ data:
   master.cnf: |-
     # Apply this config only on the master.
     [mysqld]
-    log-bin=master.log
-    bind-address=0.0.0.0
+    bind-address     = 0.0.0.0
   slave.cnf: |-
     # Apply this config only on slaves.
     [mysqld]
+    bind-address     = 0.0.0.0
     super-read-only
-    log-bin=slave.log
-    bind-address=0.0.0.0
+

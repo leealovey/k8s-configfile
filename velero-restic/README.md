@@ -9,7 +9,7 @@
 velero completion bash
 
 velero install --provider aws --plugins velero/velero-plugin-for-aws:v1.0.0 --bucket velero --secret-file ./credentials-velero \
---use-volume-snapshots=false --backup-location-config region=default,s3forcePathStyle="true",s3url=https://minio-service.default:9000
+--use-volume-snapshots=false --backup-location-config region=default,s3forcePathStyle="true",s3url=http://192.168.214.20:31937
 velero install \
     --provider aws \
     --plugins velero/velero-plugin-for-aws:v1.0.0 \
